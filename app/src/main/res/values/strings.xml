@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Sprit Statistik</string>
+    <string name="overview">Übersicht</string>
+    <string name="list">Liste</string>
+    <string name="settings">Einstellungen</string>
+    <string name="addValue">Plus</string>
+</resources>
