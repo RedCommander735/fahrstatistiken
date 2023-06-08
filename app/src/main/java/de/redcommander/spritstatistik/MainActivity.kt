@@ -26,6 +26,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -57,13 +60,19 @@ class MainActivity : ComponentActivity() {
 
                 val navController = rememberNavController()
 
-                BottomNavigationBar(navigationItems, navController)
+                var addValueScreenActive by remember { mutableStateOf(false) }
+
+
+                BottomNavigationBar(navigationItems, navController) {
+                    addValueScreenActive = it
+                }
                 Row(
                     modifier = Modifier
                         .fillMaxSize()
                         .offset(x = 20.dp, y = (-100).dp),
                     verticalAlignment = Alignment.Bottom
                 ) {
+                    if (!addValueScreenActive) {
                     Box(
                         modifier = Modifier
                             .size(70.dp)
@@ -77,11 +86,25 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                     ) {
-                        Row(modifier = Modifier
-                            .fillMaxSize()
-                            .clickable {
-                                navController.navigate(Screen.AddValue.route)
-                            },
+                        Row(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .clickable {
+                                    addValueScreenActive = true
+                                    navController.navigate(Screen.AddValue.route) {
+                                        // Pop up to the start destination of the graph to
+                                        // avoid building up a large stack of destinations
+                                        // on the back stack as users select items
+                                        popUpTo(navController.graph.findStartDestination().id) {
+                                            saveState = true
+                                        }
+                                        // Avoid multiple copies of the same destination when
+                                        // reselecting the same item
+                                        launchSingleTop = true
+                                        // Restore state when reselecting a previously selected item
+                                        restoreState = true
+                                    }
+                                },
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Center
                         ) {
@@ -98,6 +121,7 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                     }
+                }
                 }
             }
         }
@@ -183,7 +207,11 @@ fun SettingsScreen() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomNavigationBar(items: List<Screen>, navController: NavHostController) {
+fun BottomNavigationBar(
+    items: List<Screen>,
+    navController: NavHostController,
+    updateAddValueScreenVisibility: (Boolean) -> Unit
+) {
     Scaffold(
         bottomBar = {
             NavigationBar(
@@ -242,6 +270,7 @@ fun BottomNavigationBar(items: List<Screen>, navController: NavHostController) {
                         label = { Text(stringResource(screen.stringId)) },
                         selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                         onClick = {
+                            updateAddValueScreenVisibility(false)
                             navController.navigate(screen.route) {
                                 // Pop up to the start destination of the graph to
                                 // avoid building up a large stack of destinations
