@@ -12,7 +12,7 @@ android {
         minSdk 29
         targetSdk 33
         versionCode 1
-        versionName "1.0"
+        versionName "0.2.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -55,7 +55,7 @@ dependencies {
 
     implementation "androidx.navigation:navigation-compose:$nav_version"
 
-    implementation "com.google.accompanist:accompanist-systemuicontroller:0.27.0"
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'

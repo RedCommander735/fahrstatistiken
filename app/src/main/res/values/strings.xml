@@ -1,7 +1,12 @@
 <resources>
-    <string name="app_name">Sprit Statistik</string>
+    <string name="app_name">Fahr-Statistiken</string>
     <string name="overview">Übersicht</string>
     <string name="list">Liste</string>
     <string name="settings">Einstellungen</string>
     <string name="addValue">Plus</string>
+    <string name="addButton">HINZUFÜGEN</string>
+    <string name="addValueLiters">Tankfüllung in Liter</string>
+    <string name="addValueKilometers">gef. Strecke in KM</string>
+    <string name="addValuePrice">Literpreis in Euro</string>
+    <string name="empty">Das Feld darf nicht leer sein</string>
 </resources>
