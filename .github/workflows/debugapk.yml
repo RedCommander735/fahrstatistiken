@@ -1,2 +1,0 @@
-- name: Build and Release Debug APK
-  uses: valley-fordham/action-release-debugapk@0.1
