@@ -25,9 +25,8 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
 
-    - name: Step 1 - Create a temporary artifact downloads folder
-      run: mkdir downloads
-    - name: Get current dir
-      run: |
-        echo "$PWD"
-        ls
+    - name: Make debug build available for download
+      uses: actions/upload-artifact@v2
+      with: 
+        name: debug-build
+        path: app/build/outputs/apk/debug
