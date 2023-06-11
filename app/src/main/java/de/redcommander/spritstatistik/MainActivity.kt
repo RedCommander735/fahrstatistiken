@@ -499,7 +499,7 @@ fun BottomNavigationBar(
     ) { innerPadding ->
         NavHost(
             navController,
-            startDestination = Screen.AddValue.route,
+            startDestination = Screen.Overview.route,
             Modifier.padding(innerPadding)
         ) {
             composable(Screen.Overview.route) { OverviewScreen() }
